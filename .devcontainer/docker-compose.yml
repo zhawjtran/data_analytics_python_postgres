@@ -5,15 +5,15 @@ services:
     build:
       context: ..
       dockerfile: .devcontainer/Dockerfile
-
+    env_file:
+      - ../.env
     volumes:
       - ..:/workspace:cached
-
-    # Overrides default command so things don't shut down after the process ends.
-    command: sleep infinity
-
-    # Runs app on the same network as the database container, allows "forwardPorts" in devcontainer.json function.
-    network_mode: service:db
+    environment:
+      - FLASK_ENV=development
+    ports:
+      - 5000:5000
+    network_mode: bridge
 
   db:
     image: postgres:latest
@@ -24,9 +24,8 @@ services:
       POSTGRES_DB: app
       POSTGRES_USER: app_user
       POSTGRES_PASSWORD: app_password
-
-    # Add "forwardPorts": ["5432"] to **devcontainer.json** to forward PostgreSQL locally.
-    # (Adding the "ports" property to this file will not forward from a Codespace.)
+    ports:
+      - 5432:5432
 
 volumes:
   postgres-data:

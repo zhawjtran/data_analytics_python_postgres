@@ -26,3 +26,6 @@ sqlalchemy==2.0.23
 flask-migrate
 flask-sqlalchemy
 python-dotenv
+ipykernel
+typing-extensions
+pip==24.3.1

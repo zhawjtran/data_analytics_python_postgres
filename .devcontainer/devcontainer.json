@@ -4,24 +4,18 @@
 	"service": "app",
 	"workspaceFolder": "/workspace",
 
-	"extensions": [
-		"ms-python.python",
-		"ms-toolsai.jupyter",
-		"analytic-signal.preview-pdf"
-	],
-
-	"features": {
-		"ghcr.io/azure/azure-dev/azd:latest": {}
-	},
 	"customizations": {
 		"vscode": {
 			// Add the IDs of extensions you want installed when the container is created.
 			"extensions": [
 				"ms-azuretools.azure-dev",
 				"ms-python.python",
+				"ms-toolsai.jupyter",
 				"ms-python.vscode-pylance",
 				"mtxr.sqltools",
-				"mtxr.sqltools-driver-pg"
+				"mtxr.sqltools-driver-pg",
+				"analytic-signal.preview-pdf",
+				"mhutchie.git-graph"
 			],
 			"settings": {
 				"sqltools.connections": [
@@ -58,12 +52,18 @@
 			}
 		}
 	},
+	"features": {
+
+		"ghcr.io/azure/azure-dev/azd:latest": {},
+		"ghcr.io/devcontainers/features/docker-in-docker": "latest",
+		"ghcr.io/devcontainers/features/github-cli": "latest"
+	},
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	"forwardPorts": [
 		5000, 5432
 	],
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "pip install -r requirements.txt",
+	//"postCreateCommand": "pip install -r requirements.txt",
 	// Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
 	"remoteUser": "vscode"
 }
