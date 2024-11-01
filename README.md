@@ -27,3 +27,11 @@ DBPASS=app_password
 ### Run the example
 
 Run the Jupyter notebook 'jupyter_postgres_db.ipynb'
+
+
+
+
+### Some notes
+    ```shell
+    pip install -r requirements.txt
+    ```
