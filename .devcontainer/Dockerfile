@@ -16,9 +16,14 @@ RUN apt-get update && \
     gir1.2-gtk-3.0 \
     build-essential \
     libpq-dev \
-    gcc && \
+    gcc \
+    ninja-build && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
+
+# Install the latest version of meson via pip to meet pycairo dependency requirements
+RUN pip install meson
+
 
 # Install ipykernel and jupyter
 RUN pip install ipykernel jupyter
@@ -34,15 +39,6 @@ RUN install -m 0755 -d /etc/apt/keyrings && \
     apt-get install -qy docker-ce docker-ce-cli docker-compose-plugin && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-RUN echo \
-    "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
-    $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
-    tee /etc/apt/sources.list.d/docker.list > /dev/null
-RUN \
-    apt-get update && \
-    apt-get install -qy \
-    docker-ce docker-ce-cli docker-compose-plugin
-
 # Install starship for vscode user with pure prompt
 RUN \
     sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- --yes && \
@@ -50,5 +46,5 @@ RUN \
     echo 'starship preset pure-preset -o /home/vscode/.config/starship.toml'  >> /home/vscode/.bashrc && \
     echo 'eval "$(starship init bash)"' >> /home/vscode/.bashrc
 
-# default user of dev container
+# Default user of dev container
 USER vscode
