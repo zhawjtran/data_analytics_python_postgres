@@ -35,7 +35,20 @@ DBPASS=app_password
 
 Run the Jupyter notebook 'jupyter_postgres_db.ipynb'
 
+### Run the Flask app
+python3 app.py
 
+
+### pgAdmin settings
+1. Dashboard: Quick Links: Add New Server
+2. Tab General:
+    Name: Postgres_DB
+3. Tab Connection:
+    Host name/address:  db
+    Port: 5432
+    Usrename: app_user
+    Password: app_password
+    Save password? Yes 
 
 
 ### Some notes
@@ -48,3 +61,6 @@ pip install -r requirements.txt
 docker system prune -f
 
 docker container prune
+
+
+python3 app.py
