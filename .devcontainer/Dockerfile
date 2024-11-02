@@ -7,10 +7,18 @@ RUN apt-get update && \
     apt-get install -qy python3 python3-pip python3-venv curl ca-certificates && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Install kernel dependencies (for pycairo)
+# Install kernel dependencies (for pycairo) and psycopg2 dependencies
 RUN apt-get update && \
-    apt-get install -y pkg-config libcairo2-dev libgirepository1.0-dev gir1.2-gtk-3.0 build-essential && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
+    apt-get install -y \
+    pkg-config \
+    libcairo2-dev \
+    libgirepository1.0-dev \
+    gir1.2-gtk-3.0 \
+    build-essential \
+    libpq-dev \
+    gcc && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # Install ipykernel and jupyter
 RUN pip install ipykernel jupyter
