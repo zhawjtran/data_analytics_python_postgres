@@ -10,15 +10,17 @@ DBHOST=localhost
 DBUSER=app_user
 DBPASS=app_password
 
-2. When you starting GitHub Codespace , it takes some time until all the postCreateCommand (which install the requirements.txt), in the tab terminal below, it inicates the current work. As soon its done, it will disapear and you can continue with the next step.
-
-3. Install the libraries in the requirments.txt with following shell command:
+2. Install the libraries in the requirments.txt with following shell command:
     ```shell
     pip install -r requirements.txt
     ```
 
 
 3. Make sure the Docker Containers (dpage/pgadmin4 & postgre) is running before executing following shell script in your terminal
+    ```shell
+    docker compose up -d
+    ```
+
 4. Initial the migration folder
     ```shell
     python3 -m flask db init
@@ -32,7 +34,6 @@ DBPASS=app_password
     ```
 
 ### Run the example
-
 Run the Jupyter notebook 'jupyter_postgres_db.ipynb'
 
 ### Run the Flask app
@@ -52,15 +53,6 @@ python3 app.py
 
 
 ### Some notes
-
-```shell
-pip install -r requirements.txt
-    ```
-
-
 docker system prune -f
 
 docker container prune
-
-
-python3 app.py
