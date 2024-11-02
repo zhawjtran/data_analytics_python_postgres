@@ -28,6 +28,7 @@ DBPASS=app_password
 
     ```shell
     python3 -m flask db upgrade
+        python3 -m flask db upgrade
     ```
 
 ### Run the example

@@ -17,8 +17,8 @@ services:
     image: dpage/pgadmin4
     restart: unless-stopped
     environment:
-      PGADMIN_DEFAULT_EMAIL: "user@domain.com" # Ersetzen Sie dies durch Ihre E-Mail
-      PGADMIN_DEFAULT_PASSWORD: "catsarecool" # Ersetzen Sie dies durch ein sicheres Passwort
+      PGADMIN_DEFAULT_EMAIL: "user@domain.com"
+      PGADMIN_DEFAULT_PASSWORD: "catsarecool"
     ports:
       - "5050:80"
     networks:

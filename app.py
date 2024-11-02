@@ -1,36 +1,39 @@
-import os
-from datetime import datetime
-
-from flask import Flask
-from flask_migrate import Migrate
-from flask_sqlalchemy import SQLAlchemy
+from flask import Flask, render_template
+import pandas as pd
+import matplotlib.pyplot as plt
+import io
+import base64
+from sqlalchemy import create_engine
 from dotenv import load_dotenv
+import os
 
-
-app = Flask(__name__, static_folder='static')
-
+app = Flask(__name__)
 load_dotenv()
 
-#app.config.update(
-#    SQLALCHEMY_DATABASE_URI=f"postgresql://{os.getenv('DBUSER')}:{os.getenv('DBPASS')}@{os.getenv('DBHOST')}/{os.getenv('DBNAME')}",
-#    SQLALCHEMY_TRACK_MODIFICATIONS=False,
-#)
+# Datenbankverbindung
+engine = create_engine(f"postgresql://{os.getenv('DBUSER')}:{os.getenv('DBPASS')}@localhost/{os.getenv('DBNAME')}")
 
-app.config.update(
-    SQLALCHEMY_DATABASE_URI=f"postgresql://{os.getenv('DBUSER')}:{os.getenv('DBPASS')}@{os.getenv('DBHOST')}/{os.getenv('DBNAME')}",
-    SQLALCHEMY_TRACK_MODIFICATIONS=False,
-)
+@app.route('/')
+def index():
+    # Holen der Daten aus der Datenbank
+    df_sub = pd.read_sql_query('''SELECT address_raw, rooms, area, price FROM apartment_table''', con=engine)
+    rows = df_sub.head().to_dict(orient='records')
 
-#app.config.update(
-#    SQLALCHEMY_DATABASE_URI=app.config.get('DATABASE_URI'),
-#    SQLALCHEMY_TRACK_MODIFICATIONS=False,
-#)
+    # Plot erstellen
+    fig = plt.figure(figsize=(7, 4))
+    plt.hist(df_sub['price'], bins=20, color='#5DADE2', alpha=1.00, rwidth=0.95)
+    plt.xlabel('Price')
+    plt.ylabel('Frequency')
+    plt.title('Histogram of Apartment Prices')
+    plt.grid(axis='y', alpha=0.75)
 
-# Initialize the database connection
-db = SQLAlchemy(app)
+    # Plot als Bild umwandeln
+    img = io.BytesIO()
+    fig.savefig(img, format='png')
+    img.seek(0)
+    plot_url = base64.b64encode(img.getvalue()).decode()
 
-# Enable Flask-Migrate commands "flask db init/migrate/upgrade" to work
-migrate = Migrate(app, db)
+    return render_template("index.html", rows=rows, plot_url=f"data:image/png;base64,{plot_url}")
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)

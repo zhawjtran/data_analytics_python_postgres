@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apartment Price Analysis</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container mt-4">
+        <h1 class="text-center text-primary">Willkommen zur Apartment-Analyse</h1>
+        <p class="text-center">Sehen Sie sich unten die ersten Einträge unserer Datenbank an und eine Preisübersicht an.
+        </p>
+
+        <div class="mt-5">
+            <h2 class="text-center text-secondary">Preisübersicht</h2>
+            <div class="text-center">
+                <img src="{{ plot_url }}" class="img-fluid mt-3" alt="Apartment Prices Histogram">
+            </div>
+        </div>
+
+        <div class="mt-5">
+            <h2 class="text-center text-secondary">Apartment-Einträge</h2>
+            <table class="table table-striped mt-3">
+                <thead>
+                    <tr>
+                        <th>Address</th>
+                        <th>Rooms</th>
+                        <th>Area (m²)</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in rows %}
+                    <tr>
+                        <td>{{ row['address_raw'] }}</td>
+                        <td>{{ row['rooms'] }}</td>
+                        <td>{{ row['area'] }}</td>
+                        <td>{{ row['price'] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+
+    </div>
+</body>
+
+</html>
