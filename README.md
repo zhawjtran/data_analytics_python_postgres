@@ -21,18 +21,6 @@ DBPASS=app_password
     docker compose up -d
     ```
 
-4. Initial the migration folder
-    ```shell
-    python3 -m flask db init
-    ```
-
-5. Run the migrations:
-
-    ```shell
-    python3 -m flask db upgrade
-        python3 -m flask db upgrade
-    ```
-
 ### Run the example
 Run the Jupyter notebook 'jupyter_postgres_db.ipynb'
 
